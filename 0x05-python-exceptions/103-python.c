@@ -1,41 +1,99 @@
-#!/usr/bin/python3 -u
+#include "/usr/include/python3.4/Python.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-import ctypes
+void print_hexn(const char *str, int n);
+void print_python_float(PyObject *p);
+void print_python_bytes(PyObject *p);
+void print_python_list(PyObject *p);
 
-lib = ctypes.CDLL('./libPython.so')
-lib.print_python_list.argtypes = [ctypes.py_object]
-lib.print_python_bytes.argtypes = [ctypes.py_object]
-lib.print_python_float.argtypes = [ctypes.py_object]
-s = b"Hello"
-lib.print_python_bytes(s);
-b = b'\xff\xf8\x00\x00\x00\x00\x00\x00';
-lib.print_python_bytes(b);
-b = b'What does the \'b\' character do in front of a string literal?'
-lib.print_python_bytes(b)
-l = [b'Hello', b'World']
-lib.print_python_list(l)
-del l[1]
-lib.print_python_list(l)
-l = l + [4, 5, 6.0, (9, 8), [9, 8, 1024], b"Holberton", "Betty"]
-lib.print_python_list(l)
-l = []
-lib.print_python_list(l)
-l.append(0)
-lib.print_python_list(l)
-l.append(1)
-l.append(2)
-l.append(3)
-l.append(4)
-lib.print_python_list(l)
-l.pop()
-lib.print_python_list(l)
-l = ["Holberton"]
-lib.print_python_list(l)
-lib.print_python_bytes(l)
-f = 3.14
-lib.print_python_float(f)
-l = [-1.0, -0.1, 0.0, 1.0, 3.14, 3.14159, 3.14159265, 3.141592653589793238462643383279502884197169399375105820974944592307816406286]
-print(l)
-lib.print_python_list(l)
-lib.print_python_float(l)
-lib.print_python_list(f)
+void print_hexn(const char *str, int n)
+{
+	int i = 0;
+
+	for (; i < n - 1; ++i)
+		printf("%02x ", (unsigned char) str[i]);
+
+	printf("%02x", str[i]);
+    fflush(stdout);
+}
+
+void print_python_bytes(PyObject *p)
+{
+    PyBytesObject *clone = (PyBytesObject *) p;
+	int calc_bytes, clone_size = 0;
+
+    printf("[.] bytes object info\n");
+    if (!PyBytes_Check(p))
+    {
+        printf("  [ERROR] Invalid Bytes Object\n");
+        return;
+    }
+
+    clone_size = PyBytes_Size(p);
+    calc_bytes = clone_size + 1;
+
+    if (calc_bytes >= 10)
+        calc_bytes = 10;
+
+    printf("  size: %d\n", clone_size);
+    printf("  trying string: %s\n", clone->ob_sval);
+    printf("  first %d bytes: ", calc_bytes);
+    print_hexn(clone->ob_sval, calc_bytes);
+    printf("\n");
+
+    fflush(stdout);
+}
+
+void print_python_list(PyObject *p)
+{   
+    int i = 0, list_len = 0;
+	PyObject *item;
+	PyListObject *clone = (PyListObject *) p;
+
+    printf("[*] Python list info\n");
+    if (!PyList_Check(p))
+    {
+        printf("  [ERROR] Invalid List Object\n");
+        return;
+    }
+
+	list_len = PyList_GET_SIZE(p);
+	printf("[*] Size of the Python List = %d\n", list_len);
+	printf("[*] Allocated = %d\n", (int) clone->allocated);
+
+	for (; i < list_len; ++i)
+	{
+		item = PyList_GET_ITEM(p, i);
+		printf("Element %d: %s\n", i, item->ob_type->tp_name);
+
+		if (PyBytes_Check(item))
+			print_python_bytes(item);
+        else if (PyFloat_Check(item))
+            print_python_float(item);
+	}
+
+    fflush(stdout);
+}
+
+void print_python_float(PyObject *p)
+{
+    PyFloatObject *clone = (PyFloatObject *) p;
+    float n = 0;
+
+    printf("[.] float object info\n");
+    if (!PyFloat_Check(p))
+    {
+        printf("  [ERROR] Invalid Float Object\n");
+        return;
+    }
+
+    n = clone->ob_fval;
+
+    if ((int) n == n)
+        printf("  value: %0.1f\n", clone->ob_fval);
+    else
+        printf("  value: %0.16g\n", clone->ob_fval);
+
+    fflush(stdout);
+}
