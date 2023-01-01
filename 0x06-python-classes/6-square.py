@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 class Square:
     """Square Class
     A Square Class
@@ -91,7 +92,7 @@ class Square:
         return False
 
     def area(self):
-        """Returns the current square area
+        """Returns  current square of the area
         """
         return self.__size ** 2
 
