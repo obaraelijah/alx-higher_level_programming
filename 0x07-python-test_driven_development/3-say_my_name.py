@@ -11,7 +11,8 @@ def say_my_name(first_name, last_name=""):
     Prints the names
     Args:
         first_name (str): The first name of anything.
-        last_name (str): The last name of anything.
+        last_name (str): The last name:wq
+        .
     Raises:
         TypeError: If `first_name` and `last_name` aren't strings.
     """
