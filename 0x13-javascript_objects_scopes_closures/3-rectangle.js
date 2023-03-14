@@ -1,7 +1,7 @@
 #!/usr/bin/node
 
 module.exports = class Rectangle {
-  constructor (h, w) {
+  constructor (w, h) {
     if (w > 0 && h > 0) {
       this.width = w;
       this.height = h;
@@ -9,12 +9,8 @@ module.exports = class Rectangle {
   }
 
   print () {
-    let row = '';
-    for (let i = 0; i < this.width; i++) {
-      row += 'x';
-    }
-    for (let i = 0; i < this.height; i++) {
-      console.log(row);
-    }
+    let a = 'X'.repeat(this.width) + '\n';
+    a = a.repeat(this.height);
+    console.log(a.slice(0, -1));
   }
 };
