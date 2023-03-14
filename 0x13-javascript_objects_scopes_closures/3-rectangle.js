@@ -11,6 +11,6 @@ module.exports = class Rectangle {
   print () {
     let a = 'X'.repeat(this.width) + '\n';
     a = a.repeat(this.height);
-    console.log(a.slice(0, -1));
+    console.log(a);
   }
 };
