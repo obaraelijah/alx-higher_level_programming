@@ -1,10 +1,7 @@
 #!/usr/bin/nod
 
 exports.esrever = function (list) {
-  const reversed = [];
-  for (let i = list.length - 1; i >= 0; i--) {
-    reversed.push(list[i]);
-  }
-
-  return reversed;
+  return list.reduceRight(function (arr, last) {
+    return (arr = arr.concat(last));
+  }, []);
 };
