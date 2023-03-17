@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """ selecting with mysqldb """
 import MySQLdb
 import sys
@@ -17,7 +17,7 @@ if __name__ == "__main__":
         print("error connecting")
     cur = connection.cursor()
     try:
-        cur.execute("SELECT * FROM states WHERE name = '{}' ORDER BY\
+        cur.execute("SELECT * FROM states WHERE BINARY name = '{}' ORDER BY\
         states.id".format(sys.argv[4]))
         rows = cur.fetchall()
         for row in rows:
