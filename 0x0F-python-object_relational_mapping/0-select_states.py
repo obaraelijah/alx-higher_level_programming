@@ -1,6 +1,8 @@
 #!/usr/bin/python3
+""" selecting with mysqldb """
 import MySQLdb
 import sys
+
 
 if __name__ == "__main__":
     try:
@@ -13,16 +15,13 @@ if __name__ == "__main__":
         )
     except MySQLdb.Error:
         print("error connecting")
-    else:
-        cur = connection.cursor()
-        try:
-            cur.execute("SELECT * FROM states ORDER BY states.id")
-            rows = cur.fetchall()
-            for row in rows:
-                print(row)
-        except MySQLdb.Error:
-            print("execution failed")
-        finally:
-            cur.close()
-        connection.close()
-
+    cur = connection.cursor()
+    try:
+        cur.execute("SELECT * FROM states ORDER BY states.id")
+        rows = cur.fetchall()
+        for row in rows:
+            print(row)
+    except MySQLdb.Error:
+        print("execution failed")
+    cur.close()
+    connection.close()
