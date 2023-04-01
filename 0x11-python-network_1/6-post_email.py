@@ -10,5 +10,5 @@ if __name__ == '__main__':
     url = sys.argv[1]
     email = {'email': argv[2]}
 
-    res = requests.post(url, data=email)
+    res = requests.post(url, email=email)
     print(res.text)
