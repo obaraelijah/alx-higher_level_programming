@@ -6,7 +6,7 @@ import requests
 if __name__ == "__main__":
     
     repo_name = sys.argv[1]
-    owner_name = sys.argv2[2]
+    owner_name = sys.argv[2]
 
     url = f"https://api.github.com/repos/{owner_name}/{repo_name}/commits"
 
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     try:
         res = res.json()
     except ValueError:
-        print("Erro:", res.json()["message"])
+        pass
     else:
         for commit in res:
             id = commit.get('sha')
