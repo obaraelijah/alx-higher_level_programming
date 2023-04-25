@@ -6,7 +6,7 @@ request(process.argv[2], (err, _res, body) => {
   if (err) console.log(err);
   const dict = {};
   const tasks = JSON.parse(body);
-  for  (let i = 0; i < tasks.length; i++) {
+  for (let i = 0; i < tasks.length; i++) {
     if (!dict[tasks[i].userId]) {
       dict[tasks[i].userId] = 0;
     }
