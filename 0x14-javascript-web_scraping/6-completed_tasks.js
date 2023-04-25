@@ -14,5 +14,5 @@ request(process.argv[2], (err, _res, body) => {
       dict[tasks[i].userId] += 1;
     }
   }
-   console.log(dict);
+  console.log(dict);
 });
