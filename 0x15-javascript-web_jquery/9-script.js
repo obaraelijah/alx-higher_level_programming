@@ -1,5 +1,7 @@
 const url = 'https://fourtonfish.com/hellosalut/?lang=fr';
 
-$.getJSON(url, (body) => {
-    $('#hello').text(body.hello);
+$(document).ready(() => {
+    $.getJSON(url, (data) => {
+        $("DIV#hello").text(data.hello);
+    });
 });
